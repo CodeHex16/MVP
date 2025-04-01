@@ -15,7 +15,7 @@ echo "====[2] Pulling the latest code ===="
 git pull origin main || exit 1
 
 echo "====[3] Navigating to directory ===="
-cd Suppl-AI || exit 1
+cd suppl-ai || exit 1
 
 echo "====[4] Stopping and removing old containers ===="
 docker-compose down || exit 1
