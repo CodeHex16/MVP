@@ -1,0 +1,54 @@
+name: Database API CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      # 2. Set up Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      # 3. Set up Docker Compose
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      # 4. Build and start Docker containers using Docker Compose
+      - name: Build and start Docker containers
+        run: |
+          cd database-api  # Change to the directory where your Dockerfile is located
+          echo "MONGODB_URL="${{ secrets.MONGODB_URL }}"" > .env  # Store your MongoDB URL in GitHub Secrets
+          echo "SECRET_KEY_JWT="${{ secrets.SECRET_KEY_JWT }}" > .env  # Store your JWT secret key in GitHub Secrets
+          docker-compose -f docker-compose.yml up -d --build
+
+      # 5. Run the tests inside the 'api' container
+      - name: Run Python tests in API container
+        run: |
+          docker-compose exec -T database-api pytest  # Runs
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_SERVER_KEY }}  # Store your private key in GitHub Secrets
+      - name: Deploy to server
+        run: ./deploy/deploy-database-api.sh
+
+      # 7. Optionally, bring down the Docker containers after tests are complete
+      - name: Stop and remove Docker containers
+        run: |
+          docker-compose down
