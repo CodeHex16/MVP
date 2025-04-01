@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - 'database-api/**'
+      - 'database-api'
   pull_request:
     branches:
       - main
     paths:
-      - 'database-api/**'
-      
+      - 'database-api'
+
 jobs:
   test:
     runs-on: ubuntu-latest

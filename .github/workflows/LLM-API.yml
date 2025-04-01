@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - 'llm-api/**'
+      - 'llm-api'
 
   pull_request:
     branches:
       - main
     paths:
-      - 'llm-api/**'
+      - 'llm-api'
 
 jobs:
   test:

@@ -5,12 +5,12 @@ on:
     branches:
       - main
     paths:
-      - 'suppl-ai/**'
+      - 'suppl-ai'
   pull_request:
     branches:
       - main
     paths:
-      - 'suppl-ai/**'
+      - 'suppl-ai'
 
 jobs:
   test:
