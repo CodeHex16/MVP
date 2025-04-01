@@ -21,7 +21,7 @@ echo "====[4] Stopping and removing old containers ===="
 docker-compose down || exit 1
 
 echo "====[5] Cleaning up old Docker images ===="
-docker system prune -af
+docker system prune -af --filter "label!=suppl-ai-shared-network"
 
 echo "====[6] Rebuilding and starting the API container ===="
 docker-compose up --build -d || exit 1
