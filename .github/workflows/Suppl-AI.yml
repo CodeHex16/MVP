@@ -4,9 +4,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'suppl-ai/**'
   pull_request:
     branches:
       - main
+    paths:
+      - 'suppl-ai/**'
 
 jobs:
   test:
