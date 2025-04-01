@@ -37,11 +37,8 @@ jobs:
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > .env  # Store your OpenAI API key in GitHub Secrets
           docker network create suppl-ai-shared-network
           docker-compose -f docker-compose.yml up -d --build
-
-      # 5. Run the tests inside the 'api' container
-      - name: Run Python tests in API container
-        run: |
           docker-compose exec -T llm-api pytest  # Runs
+          
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:

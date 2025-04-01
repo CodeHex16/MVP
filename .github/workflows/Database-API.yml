@@ -37,11 +37,8 @@ jobs:
           echo "SECRET_KEY_JWT='${{ secrets.SECRET_KEY_JWT }}'" > .env  # Store your JWT secret key in GitHub Secrets
           docker network create suppl-ai-shared-network
           docker-compose -f docker-compose.yml up -d --build
-
-      # 5. Run the tests inside the 'api' container
-      - name: Run Python tests in API container
-        run: |
           docker-compose exec -T database-api pytest  # Runs
+          
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:

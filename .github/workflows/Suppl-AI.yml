@@ -35,11 +35,8 @@ jobs:
           cd suppl-ai  # Change to the directory where your Dockerfile is located
           docker network create suppl-ai-shared-network
           docker-compose -f docker-compose.yml up -d --build
-
-      # 5. Run the tests inside the 'api' container
-      - name: Run Python tests in API container
-        run: |
           docker-compose exec -T suppl-ai npm run test  # Runs
+          
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
