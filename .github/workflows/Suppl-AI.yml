@@ -36,13 +36,16 @@ jobs:
           docker network create suppl-ai-shared-network
           docker-compose -f docker-compose.yml up -d --build
           docker-compose exec -T suppl-ai npm run test  # Runs
-          
+
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_SERVER_KEY }}  # Store your private key in GitHub Secrets
       - name: Deploy to server
-        run: ./deploy/deploy-suppl-ai.sh
+        run: |
+          chmod +x ./deploy/deploy-suppl-ai.sh
+          # Ensure the script is executable
+          ./deploy/deploy-suppl-ai.sh  # Run the deployment script
 
       # 7. Optionally, bring down the Docker containers after tests are complete
       - name: Stop and remove Docker containers
