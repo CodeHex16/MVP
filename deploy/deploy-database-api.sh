@@ -13,6 +13,7 @@ cd ${REMOTE_DIR} || exit 1
 
 echo "====[2] Pulling the latest code ===="
 git pull origin main || exit 1
+git pull --recurse-submodules
 
 echo "====[3] Navigating to Database API directory ===="
 cd database-api || exit 1
