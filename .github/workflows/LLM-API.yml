@@ -35,6 +35,7 @@ jobs:
         run: |
           cd llm-api  # Change to the directory where your Dockerfile is located
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > .env  # Store your OpenAI API key in GitHub Secrets
+          docker network create suppl-ai-shared-network
           docker-compose -f docker-compose.yml up -d --build
 
       # 5. Run the tests inside the 'api' container

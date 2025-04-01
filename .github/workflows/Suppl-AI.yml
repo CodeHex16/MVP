@@ -33,6 +33,7 @@ jobs:
       - name: Build and start Docker containers
         run: |
           cd suppl-ai  # Change to the directory where your Dockerfile is located
+          docker network create suppl-ai-shared-network
           docker-compose -f docker-compose.yml up -d --build
 
       # 5. Run the tests inside the 'api' container
