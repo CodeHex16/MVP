@@ -1,0 +1,50 @@
+services:
+    suppl-ai:
+        extends:
+            file: ./Suppl-AI/docker-compose.yml
+            service: suppl-ai
+        environment:
+            - DATABASE_API_URL=http://database-api:8000
+        container_name: suppl-ai
+        ports:
+            - "3000:3000"
+
+    llm-api:
+        extends:
+            file: ./LLM-API/docker-compose.yml
+            service: llm-api
+        container_name: llm-api
+        ports:
+            - "8001:8001"
+
+    database-api:
+        extends:
+            file: ./Database-API/docker-compose.yml
+            service: database-api
+        environment:
+            - MONGO_DB_URL=mongo-db:27017
+            - LLM_API_URL=http://llm-api:8001
+        container_name: database-api
+        ports:
+            - "8000:8000"
+
+    mongo-db:
+        extends:
+            file: ./Database-API/docker-compose.yml
+            service: mongo-db
+        container_name: database-mongo
+        ports:
+            - "27017:27017"
+
+    mongo-express:
+        extends:
+            file: ./Database-API/docker-compose.yml
+            service: mongo-express
+        container_name: database-mongo-express
+        ports:
+            - "8081:8081"
+
+volumes:
+    chroma_db:
+    mongodb_data:
+    documents:
