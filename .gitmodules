@@ -1,0 +1,9 @@
+[submodule "database-api"]
+	path = database-api
+	url = https://github.com/CodeHex16/Database-API.git
+[submodule "llm-api"]
+	path = llm-api
+	url = https://github.com/CodeHex16/llm-api.git
+[submodule "suppl-ai"]
+	path = suppl-ai
+	url = https://github.com/CodeHex16/suppl-ai.git
