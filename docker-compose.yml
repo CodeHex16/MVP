@@ -7,7 +7,9 @@ services:
             - DATABASE_API_URL=http://database-api:8000
         container_name: suppl-ai
         ports:
-            - "3000:3000"
+            - 3000:3000
+        networks:
+            - suppl-ai-shared-network
 
     llm-api:
         extends:
@@ -15,7 +17,9 @@ services:
             service: llm-api
         container_name: llm-api
         ports:
-            - "8001:8001"
+            - 8001:8001
+        networks:
+            - suppl-ai-shared-network
 
     database-api:
         extends:
@@ -26,7 +30,9 @@ services:
             - LLM_API_URL=http://llm-api:8001
         container_name: database-api
         ports:
-            - "8000:8000"
+            - 8000:8000
+        networks:
+            - suppl-ai-shared-network
 
     mongo-db:
         extends:
@@ -34,7 +40,9 @@ services:
             service: mongo-db
         container_name: database-mongo
         ports:
-            - "27017:27017"
+            - 27017:27017
+        networks:
+            - suppl-ai-shared-network
 
     mongo-express:
         extends:
@@ -42,9 +50,15 @@ services:
             service: mongo-express
         container_name: database-mongo-express
         ports:
-            - "8081:8081"
+            - 8081:8081
+        networks:
+            - suppl-ai-shared-network
 
 volumes:
     chroma_db:
     mongodb_data:
     documents:
+
+networks:
+    suppl-ai-shared-network:
+        external: true
