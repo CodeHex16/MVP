@@ -58,6 +58,7 @@ volumes:
     chroma_db:
     mongodb_data:
     documents:
+    node_modules:
 
 networks:
     suppl-ai-shared-network:
