@@ -1,0 +1,67 @@
+name: LLM API CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'llm-api'
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'llm-api'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      # 2. Set up Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+
+      # 3. Set up Docker Compose
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      # 4. Build and start Docker containers using Docker Compose
+      - name: Build and start Docker containers
+        run: |
+          cd llm-api  # Change to the directory where your Dockerfile is located
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > .env  # Store your OpenAI API key in GitHub Secrets
+          docker network create suppl-ai-shared-network
+          docker-compose -f docker-compose.yml up -d --build
+          if [ ! -d "tests" ] || [ -z "$(ls -A tests)" ]; then
+            echo "No tests found. Skipping test step."
+          else
+            echo "Running tests..."
+            # Run tests here
+            docker-compose exec -T llm-api pytest  # Runs
+          fi
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_SERVER_KEY }}  # Store your private key in GitHub Secrets
+      - name: Deploy to server
+        run: |
+          chmod +x ./deploy/deploy-llm-api.sh
+          # Ensure the script is executable
+          ./deploy/deploy-llm-api.sh  # Run the deployment script
+
+      # 7. Optionally, bring down the Docker containers after tests are complete
+      - name: Stop and remove Docker containers
+        run: |
+          cd llm-api  # Change to the directory where your Dockerfile is located
+          docker-compose down
