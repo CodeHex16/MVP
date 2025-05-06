@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - 'llm-api'
+      - 'LLM-API'
 
   pull_request:
     branches:
       - main
     paths:
-      - 'llm-api'
+      - 'LLM-API'
 
 jobs:
   test:
@@ -38,7 +38,7 @@ jobs:
       # 4. Build and start Docker containers using Docker Compose
       - name: Build and start Docker containers
         run: |
-          cd llm-api  # Change to the directory where your Dockerfile is located
+          cd LLM-API  # Change to the directory where your Dockerfile is located
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > .env  # Store your OpenAI API key in GitHub Secrets
           docker network create suppl-ai-shared-network
           docker-compose -f docker-compose.yml up -d --build
@@ -47,7 +47,7 @@ jobs:
           else
             echo "Running tests..."
             # Run tests here
-            docker-compose exec -T llm-api pytest  # Runs
+            docker-compose exec -T LLM-API pytest  # Runs
           fi
 
       - name: Set up SSH
@@ -63,5 +63,5 @@ jobs:
       # 7. Optionally, bring down the Docker containers after tests are complete
       - name: Stop and remove Docker containers
         run: |
-          cd llm-api  # Change to the directory where your Dockerfile is located
+          cd LLM-API  # Change to the directory where your Dockerfile is located
           docker-compose down
