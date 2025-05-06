@@ -16,7 +16,7 @@ git pull origin main || exit 1
 git pull --recurse-submodules
 
 echo "====[3] Navigating to Database API directory ===="
-cd database-api || exit 1
+cd Database-API || exit 1
 
 echo "====[4] Stopping and removing old containers ===="
 docker-compose down || exit 1

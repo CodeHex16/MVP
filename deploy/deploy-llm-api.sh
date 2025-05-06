@@ -16,7 +16,7 @@ git pull origin main || exit 1
 git pull --recurse-submodules
 
 echo "====[3] Navigating to API directory ===="
-cd llm-api || exit 1
+cd LLM-API || exit 1
 
 echo "====[4] Stopping and removing old containers ===="
 docker-compose down || exit 1
