@@ -22,11 +22,11 @@ git clone --recurse-submodules https://github.com/CodeHex16/MVP.git
 
 ## How to run the project
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 ## How to stop the project
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ## How to update project with the submodules
