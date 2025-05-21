@@ -21,8 +21,17 @@ git clone --recurse-submodules https://github.com/CodeHex16/MVP.git
 
 
 ## How to run the project
+First you need to ```cd``` into the project folder in order to create your ```.env``` file, so:
+- ```cd MVP```
+- ```cp .env.example .env```
+
+Then you need to create the docker shared network:
 ```bash
-docker compose up -d
+docker network create suppl-ai-shared-network
+```
+And finally you can build and run the project:
+```bash
+docker compose up -d --build
 ```
 ## How to stop the project
 ```bash
